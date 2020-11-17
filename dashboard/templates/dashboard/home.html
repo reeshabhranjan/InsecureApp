@@ -2,8 +2,17 @@
 
 {% block title %}{{ request.user.username }}{% endblock title %}
 {% block body %}
-<form method="post" action="{% url 'logout' %}">
-    {% csrf_token %}
-    <button type="submit">Logout</button>
-</form>
+    <form method="post" action="{% url 'logout' %}">
+        {% csrf_token %}
+        <button type="submit">Logout</button>
+    </form>
+    <br><br>
+    <hr>
+    {% for post in posts %}
+        Posted by <b>{{ post.user.username }}</b> at <b>{{ post.time_added }}</b>
+        <br>
+        Last modified at <b>{{ post.time_modified }}</b>
+        <p>"{{ post.body|safe }}"</p>
+        <hr>
+    {% endfor %}
 {% endblock body %}
