@@ -12,3 +12,8 @@ def home(request):
         'posts': posts,
     }
     return render(request, 'dashboard/home.html', context=context)
+
+
+@login_required
+def profile(request):
+    return render(request, 'dashboard/profile.html')

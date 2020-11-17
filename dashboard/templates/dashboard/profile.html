@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+
+{% block title %} Profile {% endblock title %}
+
+{% block body %}
+    Your secret key is {{ request.user.profile.secret }}.
+    <br>
+    <b>KEEP IT A SECRET!!!</b>
+{% endblock body %}
