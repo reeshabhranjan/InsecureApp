@@ -3,13 +3,39 @@
 {% block title %}My mails{% endblock title %}
 
 {% block body %}
-    <form method="post">
+    <form method="post" action="{% url 'send_mail' %}">
         {% csrf_token %}
+        <b>Message: </b>
+        <textarea name="message"></textarea>
+        <br>
+        <b>Send to: </b>
+        <select name="receiver_username">
+            {% for user_choice in users %}
+            <option value="{{ user_choice.username }}">{{ user_choice.username }}</option>
+            {% endfor %}
+        </select>
+        <button type="submit">Send mail</button>
+    </form>
+    <hr>
+    <br>
+    <form method="post" action="{% url 'mails' %}">
+        {% csrf_token %}
+        <b>Enter your secret key available in profile to see your mails.</b>
         <input type="text" name="search_query">
         <button type="submit">Submit</button>
     </form>
 
     {% if search_result %}
+        {% if search_query %}
+            <br>
+            <table border="2" cellpadding="10">
+                <tr>
+                    <td>Showing results for </td>
+                    <td><b> {{ search_query }} </b></td>
+                </tr>
+            </table>
+            </br>
+        {% endif %}
         {% for result in search_result %}
             {{ result }}
             <hr>

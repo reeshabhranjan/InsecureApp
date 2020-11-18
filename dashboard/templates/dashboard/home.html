@@ -2,9 +2,11 @@
 
 {% block title %}{{ request.user.username }}{% endblock title %}
 {% block body %}
-    <form method="post" action="{% url 'logout' %}">
+    <form method="post" action="{% url 'home' %}">
         {% csrf_token %}
-        <button type="submit">Logout</button>
+{#        <input type="text" name="post_content" style="height: 100px">#}
+        <textarea name="post_content"></textarea>
+        <button type="submit">Post it!</button>
     </form>
     <br><br>
     <hr>

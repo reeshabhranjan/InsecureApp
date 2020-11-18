@@ -31,6 +31,7 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     'accounts.apps.AccountsConfig',
     'dashboard.apps.DashboardConfig',
+    'crispy_forms',
 
     # DEFAULT
     'django.contrib.admin',
@@ -119,4 +120,5 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 LOGIN_REDIRECT_URL = 'home'
+LOGOUT_REDIRECT_URL = 'homepage'
 SESSION_COOKIE_HTTPONLY = False  # VERY VERY VERY UNSAFE!!!!

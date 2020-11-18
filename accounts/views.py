@@ -13,3 +13,7 @@ def signup(request):
     else:
         form = UserCreationForm()
     return render(request, 'registration/signup.html', context={'form': form})
+
+
+def homepage(request):
+    return render(request, 'registration/homepage.html')

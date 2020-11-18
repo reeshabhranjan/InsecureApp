@@ -6,5 +6,6 @@ from dashboard import views
 urlpatterns = [
     path('home/', views.home, name='home'),
     path('profile/', views.profile, name='profile'),
-    path('mails/', views.mail, name='mails')
+    path('mails/', views.mail, name='mails'),
+    path('send_mail/', views.send_mail, name='send_mail'),
 ]

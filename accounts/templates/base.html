@@ -5,6 +5,20 @@
     <title>{% block title %}{% endblock title %}</title>
 </head>
 <body>
+    {% if user.is_authenticated %}
+        <form method="post" action="{% url 'logout' %}">
+            {% csrf_token %}
+            <button type="button" onclick="location.href='{% url 'home' %}'">Home</button>
+            <button type="button" onclick="location.href='{% url 'profile' %}'">Profile</button>
+            <button type="button" onclick="location.href='{% url 'mails' %}'">Mails</button>
+            <button type="submit">Logout</button>
+        </form>
+    {% else %}
+        <button type="button" onclick="location.href='{% url 'login' %}'">Login</button>
+        <button type="button" onclick="location.href='{% url 'signup' %}'">Register</button>
+    {% endif %}
+    <hr>
+    <br>
 {% if messages %}
 <ul class="messages">
     {% for message in messages %}
