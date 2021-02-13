@@ -4,6 +4,8 @@ from django.contrib.auth.models import User
 from django.shortcuts import render, redirect
 import sqlite3
 # Create your views here.
+from django.views.decorators.csrf import csrf_exempt
+
 from dashboard.models import Post, Mail
 
 
@@ -16,12 +18,18 @@ def home(request):
     context = {
         'posts': posts,
     }
-    return render(request, 'dashboard/home.html', context=context)
+
+    response = render(request, 'dashboard/home.html', context=context)
+    response.set_cookie("reeshabh", "ranjan")
+    response.cookies["reeshabh"]['httponly'] = True
+    return response
 
 
 @login_required
 def profile(request):
-    return render(request, 'dashboard/profile.html')
+    response = render(request, 'dashboard/profile.html')
+    response.delete_cookie("reeshabh")
+    return response
 
 
 @login_required
@@ -55,3 +63,34 @@ def send_mail(request):
         messages.success(request, "Message sent!")
         return redirect('mails')
 
+
+@login_required
+def update_username_get(request):
+    username = request.GET.get("username")
+    if username == "" or username is None:
+        messages.error(request, "Please enter a valid value for username!")
+    else:
+        if User.objects.filter(username=username).exists():
+            messages.error(request, "Username already exists!")
+        else:
+            request.user.username = username
+            request.user.save()
+            messages.success(request, "Username updated!")
+    return redirect('profile')
+
+
+@csrf_exempt
+@login_required
+def update_username_post(request):
+    if request.method == 'POST':
+        username = request.POST.get("username")
+        if username == "" or username is None:
+            messages.error(request, "Please enter a valid value for username!")
+        else:
+            if User.objects.filter(username=username).exists():
+                messages.error(request, "Username already exists!")
+            else:
+                request.user.username = username
+                request.user.save()
+                messages.success(request, "Username updated!")
+        return redirect('profile')

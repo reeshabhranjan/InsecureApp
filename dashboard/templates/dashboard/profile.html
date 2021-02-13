@@ -6,4 +6,10 @@
     Your secret key is {{ request.user.profile.secret }}.
     <br>
     <b>KEEP IT A SECRET!!!</b>
+
+    <h2>Change your username here:</h2>
+    <form method="get" action="{% url 'update-username-get' %}">
+        <input type="text" maxlength="20" name="username">
+        <button type="submit">Update</button>
+    </form>
 {% endblock body %}
